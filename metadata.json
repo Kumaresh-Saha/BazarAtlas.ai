@@ -1,0 +1,6 @@
+{
+  "name": "BazaarAtlas India",
+  "description": "Indian local shop directory for cloths, groceries, electronics, restaurants, household items, and cold drinks with Google Places data collection, shop photos, customer reviews, optimized route planning, real-time navigation, and user accounts.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

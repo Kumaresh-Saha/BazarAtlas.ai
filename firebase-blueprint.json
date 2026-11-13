@@ -1,0 +1,293 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private user account profile for BazaarAtlas India shoppers and shopkeepers.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth user UID matching document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User full display name.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified user email address.",
+          "maxLength": 160
+        },
+        "phone": {
+          "type": "string",
+          "description": "Optional Indian phone number.",
+          "maxLength": 20
+        },
+        "preferredCity": {
+          "type": "string",
+          "description": "Preferred Indian city or locality for shop discovery.",
+          "maxLength": 80
+        },
+        "preferredTravelMode": {
+          "type": "string",
+          "enum": ["DRIVING", "TWO_WHEELER", "WALKING", "TRANSIT"],
+          "description": "Default travel mode for route optimization and navigation."
+        },
+        "accountRole": {
+          "type": "string",
+          "enum": ["shopper", "owner"],
+          "description": "User role in the BazaarAtlas directory."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Profile avatar URL.",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of profile creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest profile update."
+        }
+      },
+      "required": ["uid", "displayName", "email", "preferredCity", "preferredTravelMode", "accountRole", "createdAt", "updatedAt"]
+    },
+    "FavoriteShop": {
+      "title": "FavoriteShop",
+      "description": "A user's saved favorite shop referenced by Google Place ID.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "placeId": {
+          "type": "string",
+          "description": "Google Maps Place ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "shopName": {
+          "type": "string",
+          "description": "Shop display name.",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "enum": ["cloths", "groceries", "electronics", "restaurant", "household", "cold_drinks", "other"],
+          "description": "Shop goods category."
+        },
+        "scale": {
+          "type": "string",
+          "enum": ["small", "medium", "large"],
+          "description": "Estimated business scale from small shopkeeper to big businessman."
+        },
+        "shortAddress": {
+          "type": "string",
+          "description": "Locality or short formatted address in India.",
+          "maxLength": 240
+        },
+        "lat": {
+          "type": "number",
+          "description": "Shop latitude coordinate."
+        },
+        "lng": {
+          "type": "number",
+          "description": "Shop longitude coordinate."
+        },
+        "note": {
+          "type": "string",
+          "description": "Personal shopper note for this favorite shop.",
+          "maxLength": 280
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when saved."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when note was updated."
+        }
+      },
+      "required": ["userId", "placeId", "shopName", "category", "scale", "shortAddress", "lat", "lng", "createdAt", "updatedAt"]
+    },
+    "ShopOwnerProfile": {
+      "title": "ShopOwnerProfile",
+      "description": "Indian shopkeeper or business owner details linked to a Google Place ID.",
+      "type": "object",
+      "properties": {
+        "placeId": {
+          "type": "string",
+          "description": "Google Maps Place ID matching document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerUid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user who registered the owner profile.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerName": {
+          "type": "string",
+          "description": "Name of the shopkeeper or business owner.",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "businessName": {
+          "type": "string",
+          "description": "Shop or business name.",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "enum": ["cloths", "groceries", "electronics", "restaurant", "household", "cold_drinks", "other"],
+          "description": "Primary goods category."
+        },
+        "businessScale": {
+          "type": "string",
+          "enum": ["small", "medium", "large"],
+          "description": "Scale of operation: small shopkeeper, medium retailer, or wholesale/big businessman."
+        },
+        "city": {
+          "type": "string",
+          "description": "Indian city.",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "locality": {
+          "type": "string",
+          "description": "Neighborhood, market, or street address in India.",
+          "minLength": 2,
+          "maxLength": 200
+        },
+        "goodsSummary": {
+          "type": "string",
+          "description": "Key goods sold (e.g., cotton sarees, cold drinks, kitchen utensils).",
+          "minLength": 3,
+          "maxLength": 300
+        },
+        "deliveryAvailable": {
+          "type": "boolean",
+          "description": "Whether local delivery is offered."
+        },
+        "yearsInBusiness": {
+          "type": "number",
+          "description": "Number of years operating."
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "Explicit visibility marker for directory listing."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of update."
+        }
+      },
+      "required": ["placeId", "ownerUid", "ownerName", "businessName", "category", "businessScale", "city", "locality", "goodsSummary", "deliveryAvailable", "yearsInBusiness", "isPublic", "createdAt", "updatedAt"]
+    },
+    "ShopReview": {
+      "title": "ShopReview",
+      "description": "Customer review contributed by a verified BazaarAtlas user.",
+      "type": "object",
+      "properties": {
+        "reviewId": {
+          "type": "string",
+          "description": "Unique review document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "placeId": {
+          "type": "string",
+          "description": "Target Google Place ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "authorUid": {
+          "type": "string",
+          "description": "Reviewer Firebase Auth UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Reviewer display name.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "rating": {
+          "type": "number",
+          "description": "Customer rating from 1 to 5."
+        },
+        "comment": {
+          "type": "string",
+          "description": "Customer review text.",
+          "minLength": 3,
+          "maxLength": 600
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "Explicit visibility flag for public directory reviews."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of update."
+        }
+      },
+      "required": ["reviewId", "placeId", "authorUid", "authorName", "rating", "comment", "isPublic", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private user account profiles containing PII, readable and writable only by the owning user."
+    },
+    "/users/{userId}/favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/FavoriteShop" },
+      "description": "Private saved favorite shops subcollection scoped to the owning user."
+    },
+    "/shop_owners/{placeId}": {
+      "schema": { "$ref": "#/entities/ShopOwnerProfile" },
+      "description": "Publicly browsable Indian shopkeeper and business owner directory enrichments keyed by Google Place ID."
+    },
+    "/shop_reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/ShopReview" },
+      "description": "Public customer reviews contributed by verified users for Indian shops."
+    }
+  }
+}
